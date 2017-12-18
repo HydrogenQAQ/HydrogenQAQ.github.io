@@ -112,7 +112,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="deep learning,CNN," />
 
 
 
@@ -123,16 +123,25 @@
 
 
 
-<meta name="description" content="无病呻吟...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="少年游">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="VGG&amp;emsp;&amp;emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。 1 ConvNet配置1.1 架构&amp;emsp;&amp;emsp;VGG-16网络唯一所做的预处理便是将输入">
+<meta name="keywords" content="deep learning,CNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络模型学习（二）">
+<meta property="og:url" content="http://yoursite.com/2017/12/18/卷积神经网络模型学习（二）/index.html">
 <meta property="og:site_name" content="少年游">
-<meta property="og:description" content="无病呻吟...">
+<meta property="og:description" content="VGG&amp;emsp;&amp;emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。 1 ConvNet配置1.1 架构&amp;emsp;&amp;emsp;VGG-16网络唯一所做的预处理便是将输入">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/16448630.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-17/67520009.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-17/39393803.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/40366083.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/32921728.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/30597725.jpg">
+<meta property="og:updated_time" content="2017-12-18T07:41:39.662Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="少年游">
-<meta name="twitter:description" content="无病呻吟...">
+<meta name="twitter:title" content="卷积神经网络模型学习（二）">
+<meta name="twitter:description" content="VGG&amp;emsp;&amp;emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。 1 ConvNet配置1.1 架构&amp;emsp;&amp;emsp;VGG-16网络唯一所做的预处理便是将输入">
+<meta name="twitter:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/16448630.jpg">
 
 
 
@@ -162,13 +171,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/18/卷积神经网络模型学习（二）/"/>
 
 
 
 
 
-  <title>少年游</title>
+  <title>卷积神经网络模型学习（二） | 少年游</title>
   
 
 
@@ -187,8 +196,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,9 +289,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -313,9 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/18/卷积神经网络模型学习（二）/" itemprop="url">卷积神经网络模型学习（二）</a></h1>
+          <h1 class="post-title" itemprop="name headline">卷积神经网络模型学习（二）</h1>
         
 
         <div class="post-meta">
@@ -387,9 +393,7 @@
       
 
       
-        
-          
-            <h3 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h3><p>&emsp;&emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。</p>
+        <h3 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h3><p>&emsp;&emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。</p>
 <h4 id="1-ConvNet配置"><a href="#1-ConvNet配置" class="headerlink" title="1 ConvNet配置"></a>1 ConvNet配置</h4><h5 id="1-1-架构"><a href="#1-1-架构" class="headerlink" title="1.1 架构"></a>1.1 架构</h5><p>&emsp;&emsp;VGG-16网络唯一所做的预处理便是将输入的224x224图片的每个像素减去RGB的均值（这个操作是使得输入的各个维度的数据都能中心化到0，还可以针对每个数据除以rgb最大值255使所有输入数据均处于-1-1之间）。在该网络中使用了3x3的卷积核（感受野为3x3），这是一个和之前LeNet5以及AlexNext相比非常小的卷积核，同时在该网络中还用到过1x1的卷积核（这个可以看做是对输入通道的线性变化）。卷积核的stride设置为1，padding的设置为same，池化操作为2x2的窗口，步长为2。最后的全连接层分别为4096、4096、1000通道，这和之前的网络相比没什么区别，此外采用的激活函数也仍旧是ReLU。VGG-16网络还有一个操作是它不再使用AlexNet中提到过的LRN，因为它觉得这个方法对准确率的提升不明显反而增加了内存的消耗和计算的时间，下面是简化版的VGG-16架构：</p>
 <p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/16448630.jpg"></p>
 <h5 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h5><p>&emsp;&emsp;在该论文中，该卷积网络的配置如下表所示：</p>
@@ -424,8 +428,6 @@
 </ul>
 <h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p><a href="http://arxiv.org/abs/1409.1556" target="_blank" rel="external">VGG</a></p>
 
-          
-        
       
     </div>
     
@@ -440,183 +442,38 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/卷积神经网络模型学习（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oyvr3xxmh.bkt.clouddn.com/17-11-4/36375047.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="少年游">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/16/卷积神经网络模型学习（一）/" itemprop="url">卷积神经网络模型学习（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-16T23:38:08+08:00">
-                2017-12-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/note/" itemprop="url" rel="index">
-                    <span itemprop="name">note</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
           
-
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-LeNet5"><a href="#1-LeNet5" class="headerlink" title="1 LeNet5"></a>1 LeNet5</h3><p>&emsp;&emsp;LeNet5于1998年由Yang LeCun发布，从此深度学习这个领域开始为人所知，而在这个网络架构中很多东西在现如今的架构中也一直沿用着，比如卷积层（Convolutional Layer）加池化层（Polling Layer）加非线性激活层（Fully Connected Layer）这种CNN经典的组合也正是在这篇论文中提出的。</p>
-<p>&emsp;&emsp;因为当时的技术有限，并没有如今的算力，无法采用GPU来进行运算，即使是CPU的运算也相当缓慢。相较于今天各种网络，这个五层网络是一个非常小的网络，只有大约60,000参数需要训练，而在现在你所看到的一些常见网络中，参数无不是从千万到亿级别的，如下为LeNet5架构：</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-15/91909246.jpg"><br>&emsp;&emsp;当时LeCun是针对黑白的手写数字图片进行识别，如下图所示：</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-16/30031856.jpg"><br>&emsp;&emsp;在这里我们可以看到输入的图片为一个32x32像素的黑白图片，所以chanel为1，然后经过一个5x5的convolutional filter进行卷积之后再经过avg pooling层，重复两次最终跟上两个个全连接层进行输出，在当时并没有采用softmax function进行输出，当时所采用的输出方法现已经淘汰，这里我们一般都会采用softmax function进行输出。</p>
-<p>&emsp;&emsp;LeNet5所做的工作是一个开创性的工作，其提出了CNN的三大特性：1.局部感知（卷积核）；2.下采样（池化）；3.权值共享，总得来说正是LeNet5架构把人们带入了深度学习的领域。</p>
-<h3 id="2-AlexNet"><a href="#2-AlexNet" class="headerlink" title="2 AlexNet"></a>2 AlexNet</h3><p>&emsp;&emsp;在1998-2012这十多年间，神经网络的发展异常的缓慢，而2012年由Alex Krizhevsky发表的AlexNet以绝对的优势赢得了当年的ImageNet竞赛的第一，技惊四座，也正是从此深度学习和神经网络又大范围地回到人们的视野。</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-16/78152235.jpg"><br>&emsp;&emsp;上图为ImageNet classification每届冠军队伍最后的错误率，我们可以看到在2012年神经网络及AlexNet的出现将错误率硬生生地下降了几乎10%，这在之前看来提升速度是非常夸张的，接着来看AlexNet的7层架构图：</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-15/82690531.jpg"><br>&emsp;&emsp;没错，这个架构和LeNet5非常地相似，两者之间的主要区别点在于首先AlexNet将层数提升到了7，其次将LeNet5中的Avg Pooling层均换成了Max Pooling层，再有在LeNet5那个年代激活函数用的均是sigmoid function或tanh function，而AlexNet则采用了如今依然非常有用的ReLU function，还有一些诸如过拟合的处理、多GPU等下面将选择部分讲述。</p>
-<p>&emsp;&emsp;该论文数据集选用的为ILSVRC-2010，这个数据集包含了1000中类别，每个类别大致有1000张左右的图片，120万的training dataset，50000的validation dataset和150000的testing dataset。</p>
-<h4 id="2-1-ReLU-Rectified-Linear-Units-激活函数"><a href="#2-1-ReLU-Rectified-Linear-Units-激活函数" class="headerlink" title="2.1 ReLU(Rectified Linear Units)激活函数"></a>2.1 ReLU(Rectified Linear Units)激活函数</h4><p>&emsp;&emsp;传统的神经网络大多采用f(x)=tanh⁡(x)或者f(x)=〖(1+e^(-x))〗^(-1)作为激活函数，在进行梯度下降的训练过程中，这些饱和非线性函数比非饱和非线性函数f(x)=max⁡(0,x)训练的要慢得多。</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-15/35591579.jpg"><br>&emsp;&emsp;如上图所示，实线代表ReLU激励函数，虚线代表tanh激励函数，在同样的神经网络下，ReLU只需要6次迭代即可达到25%的训练错误率，而tanh则需要35次以上的迭代次数，这里就可以看出ReLU在对网络越大，参数越多的情况下训练速度的提升是非常明显的。</p>
-<h4 id="2-2-架构"><a href="#2-2-架构" class="headerlink" title="2.2 架构"></a>2.2 架构</h4><p>&emsp;&emsp;从AlexNet的架构图以及论文的描述中我们可以得到AlexNet的具体细节如下图所示：</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-15/52657695.jpg"><br>&emsp;&emsp;可以看到AlexNet共有5层卷积层，其中前两个卷积层后均跟着一个最大池化层和正则层，之后连续跟了三个卷积层以及一个最大池化层，最后是三层全连接层。注意Response Normalization Layer这个是用来做归一化处理的，而且在所有的卷积层和全连接层都用到了ReLU函数，而且从图4中也能看出来上下两个分别是在两个GPU上运行。其中每一层的神经元的个数分别为253440-186624-64896-64896-43264-4096-4096-1000，从这里我们能够看到绝大多数的神经元均集中在了卷积层，因为卷积层要对数据进行不断的升维。</p>
-<h4 id="2-3-减少过拟合"><a href="#2-3-减少过拟合" class="headerlink" title="2.3 减少过拟合"></a>2.3 减少过拟合</h4><p>&emsp;&emsp;在神经网络的训练过程中，一直存在着两种问题：欠拟合和过拟合。AlexNet有大约6千万的参数要训练，同样存在着过拟合的问题，而针对过拟合AlexNet采取了两种方法来对抗。</p>
-<h5 id="2-3-1-Data-Augmentation"><a href="#2-3-1-Data-Augmentation" class="headerlink" title="2.3.1 Data Augmentation"></a>2.3.1 Data Augmentation</h5><p>&emsp;&emsp;Data Augmentation的意思是数据增强，这是一个针对过拟合很常用的方法，既然模型过拟合，那么加大数据的输入量能在很大程度上减缓过拟合。而AlexNet在数据增强这方面的做法便是对输入的256x256的图片随意截取其224x224像素的部分，标签仍然是原来的标签，这样直接将训练数据集的大小增加了2048倍。而在针对测试集进行预测的时候，首先取出图片四个角落和中心被裁剪过的224x224图片，再加其余任意裁剪后的224x224五张图，共十张图进行预测，最后将10个结果取平均来得到最终的结果。另一个增强数据量的方法是改变每张图片的RGB值来得到更多的图片（这里采用了PCA），这样做最后的结果也表明了图像对比度和颜色的变化对图像本身的识别是不会产生影响的。</p>
-<h5 id="2-3-2-Dropout"><a href="#2-3-2-Dropout" class="headerlink" title="2.3.2 Dropout"></a>2.3.2 Dropout</h5><p>&emsp;&emsp;Dropout是近几年非常流行的一个处理神经网络过拟合方法，在AlexNet中第二种处理过拟合便采用了dropout。Dropout的原理便是，设置一个dropout值，这样神经网络每层将有一定比例的神经元在当前epoch失效。</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-16/45381178.jpg"><br>&emsp;&emsp;如上图所示，设置dropout值为0.5，那么在每次的epoch中，每层的神经元将会有50%在神经网络的前向传播和后向传播中不在做出贡献，当然也可以针对每一层各自设置一个dropout值，实验表明该方法能有效地去对抗神经网络的过拟合。Dropout的作用减少了神经元之间的相互依赖，因为每一个epoch都无法保证上一趟epoch所依赖的神经元是否会在这次消失，这样使得每个神经云尽可能地学会更多特征。而也正是dropout的使用使得AlexNet极大地减轻了过拟合带来的损失，并使训练的次数翻倍。还有一点需要注意的是，dropout只需要用在训练的过程，而在针对测试数据集时是不能使用dropout的，那样做只会对你的预测增加噪声。还有一点需要注意的是，在对每一层使用完dropout后所得到的值，比如第三层共有30个神经元，设置dropout的值为0.8，这样有6个神经元在一趟epoch中被消除，而得到的结果需要除以dropout的值。即在这一层得到的值还需要都除以0.8后再传向下一层。</p>
-<h4 id="2-4-训练细节"><a href="#2-4-训练细节" class="headerlink" title="2.4 训练细节"></a>2.4 训练细节</h4><p>&emsp;&emsp;AlexNet模型采用了随机梯度下降（SGD），设置mini batch的大小为128，momentum参数为0.9（momentum的作用是为了加速随机梯度下降在某一个方向上的搜索，并减少模型的震荡导致无法收敛），权值衰减设为0.0005（目的主要是为了防止过拟合），权值更新的公式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">v_(i+1)≔0.9∙v_i-0.0005∙ϵ∙ω_i-ϵ∙⟨∂L/∂ω│ω_i ⟩_(D_i )</div><div class="line"></div><div class="line">ω_(i+1)≔ω_i+v_(i+1)</div></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;其中i是迭代参数，v为momentum参数，ϵ为学习速率，⟨∂L/∂ω│ω<em>i ⟩</em>(D_i )是目标函数对ω，在ω_i上的第i批微分D_i的平均。AlexNet学习速率的设置是手动调节的，起始的学习速率为0.01，当validation数据集的错误率不再变化的时候将学习速率调小十倍后继续训练。</p>
-<h4 id="2-5-总结"><a href="#2-5-总结" class="headerlink" title="2.5 总结"></a>2.5 总结</h4><p>&emsp;&emsp;AlexNet模型的重点如下:</p>
-<ol>
-<li>使用了ReLU作为非线性激活函数;</li>
-<li>使用了两种数据扩增的方式（裁剪和改变RGB的强度）;</li>
-<li>将LeNet5的Avg Pooling改成了Max Pooling;</li>
-<li>使用dropout来避免过拟合增大了迭代次数;</li>
-<li>使用双GPU进行训练。</li>
-</ol>
-<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf" target="_blank" rel="external">LeNet5</a><br><a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="external">AlexNet</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/16/卷积神经网络模型学习（一）/" rel="next" title="卷积神经网络模型学习（一）">
+                <i class="fa fa-chevron-left"></i> 卷积神经网络模型学习（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -626,10 +483,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -637,6 +495,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -657,8 +519,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -724,6 +595,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#VGG"><span class="nav-number">1.</span> <span class="nav-text">VGG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ConvNet配置"><span class="nav-number">1.1.</span> <span class="nav-text">1 ConvNet配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-架构"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 架构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-配置"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 配置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-训练和测试"><span class="nav-number">1.2.</span> <span class="nav-text">2 训练和测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-分类实验"><span class="nav-number">1.3.</span> <span class="nav-text">3 分类实验</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-单尺度评估vs多尺度评估"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 单尺度评估vs多尺度评估</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-多网络融合"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 多网络融合</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-总结"><span class="nav-number">1.4.</span> <span class="nav-text">4 总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用"><span class="nav-number">1.5.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -864,6 +751,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
