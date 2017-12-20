@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="deep learning,CNN," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="GoogLeNet(Inception Net)&amp;emsp;&amp;emsp;GoogLeNet是2014年ImageNet Classification的冠军得主，该架构的主要特点是充分地利用了网络内部的计算资源，并在设计上精雕细琢是的最终的层数达到了22层。其架构的决定基于Hebbian理论（维基的解释：我们可以假定，反射活动的持续与重复会导致神经元稳定性的持久性提升……当神经元A的轴突与神经元B很">
+<meta name="keywords" content="deep learning,CNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoogLeNet模型学习">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/GoogLeNet模型学习/index.html">
+<meta property="og:site_name" content="少年游">
+<meta property="og:description" content="GoogLeNet(Inception Net)&amp;emsp;&amp;emsp;GoogLeNet是2014年ImageNet Classification的冠军得主，该架构的主要特点是充分地利用了网络内部的计算资源，并在设计上精雕细琢是的最终的层数达到了22层。其架构的决定基于Hebbian理论（维基的解释：我们可以假定，反射活动的持续与重复会导致神经元稳定性的持久性提升……当神经元A的轴突与神经元B很">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/7901825.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/98447924.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/29711383.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/31510768.jpg">
+<meta property="og:updated_time" content="2017-12-20T09:05:21.507Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GoogLeNet模型学习">
+<meta name="twitter:description" content="GoogLeNet(Inception Net)&amp;emsp;&amp;emsp;GoogLeNet是2014年ImageNet Classification的冠军得主，该架构的主要特点是充分地利用了网络内部的计算资源，并在设计上精雕细琢是的最终的层数达到了22层。其架构的决定基于Hebbian理论（维基的解释：我们可以假定，反射活动的持续与重复会导致神经元稳定性的持久性提升……当神经元A的轴突与神经元B很">
+<meta name="twitter:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/7901825.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/20/GoogLeNet模型学习/"/>
+
+
+
+
+
+  <title>GoogLeNet模型学习 | 少年游</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">少年游</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-主页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-文章"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/GoogLeNet模型学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oyvr3xxmh.bkt.clouddn.com/17-11-4/36375047.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="少年游">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GoogLeNet模型学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T16:53:38+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index">
+                    <span itemprop="name">note</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="GoogLeNet-Inception-Net"><a href="#GoogLeNet-Inception-Net" class="headerlink" title="GoogLeNet(Inception Net)"></a>GoogLeNet(Inception Net)</h3><p>&emsp;&emsp;GoogLeNet是2014年ImageNet Classification的冠军得主，该架构的主要特点是充分地利用了网络内部的计算资源，并在设计上精雕细琢是的最终的层数达到了22层。其架构的决定基于Hebbian理论（维基的解释：我们可以假定，反射活动的持续与重复会导致神经元稳定性的持久性提升……当神经元A的轴突与神经元B很近并参与了对B的重复持续的兴奋时，这两个神经元或其中一个便会发生某些生长过程或代谢变化，致使A作为能使B兴奋的细胞之一，它的效能增强了）。</p>
+<p>&emsp;&emsp;2014年是卷积神经网络的绽放年，对比之前介绍过的同一年出现的VGG网络，GoogLeNet的一个非常大的优势便是其要训练的参数远小于VGG网络，故计算成本要低很多。论文中还说到其论文名字中的deep有着两层的含义，其一是引入了了一种新的层次组织方式(Inception module)；其二是更直观地便是加深了网络的深度。</p>
+<h4 id="1-相关工作"><a href="#1-相关工作" class="headerlink" title="1 相关工作"></a>1 相关工作</h4><p>&emsp;&emsp;在这里主要对1x1卷积层进行介绍，原文中描述了在1x1卷积层后跟上ReLU层，使当前的网络能轻易地集成该卷积层。所以在该网络中大量地采用了1x1的卷积核，其主要目的是对数据进行了降维，从而移除计算的瓶颈。这样做不仅能增加网络的深度而且在保证网络的宽度的同时对最终的性能没有明显的损失。</p>
+<p>&emsp;&emsp;先说说降维，因为3x3和5x5的卷积核在filter数目大的时候对前一层网络进行卷机操作时相当的耗时，所以通过在两者之间加入1x1卷积核将维度降下来。比如一张100x100且channels为100的图片经过20个filter的1x1卷积层后维度就降到了100x100x20。当然既然能降维，该卷积层同样能做到升维，所以其中一个重要的作用便是调节维度；另一个好处便是1x1卷积层后面直接可以加入ReLU非线性层，增加模型的复杂度（这个在VGG的网络中也采用过）。</p>
+<p>&emsp;&emsp;论文中还提到了R-CNN将物体检测分为了两个步骤，首先是利用颜色和纹理等低级信号，以先不管类别的方式去产生目标位置的候选区域；然后利用CNN分类器去上述的区域中识别对象。</p>
+<h4 id="2-动机和高层次的思考"><a href="#2-动机和高层次的思考" class="headerlink" title="2 动机和高层次的思考"></a>2 动机和高层次的思考</h4><p>&emsp;&emsp;GoogLeNet同样也提出了想直截了当地增加最后神经网络的性能的一个方法便是增加网络的深度（该观点在VGG也同样地提出过），但深度的增加也存在着两个弊端：</p>
+<ul>
+<li>其一，更深的网络意味着更多的参数，这样会导致网络更容易地出现过拟合的现象，尤其是当训练的带标记的数据有限。这将会导致网络出现瓶颈，因为高质量的带标记的训练数据的获得是非常棘手和昂贵的；</li>
+<li>其二，一味地增加深度同样会极大地增加计算资源。比如在一个较深的神经网络中，如果有两层卷积层是相互连接的，那么它们之中filters数目的增加将会导致计算量的平方式的增加。而且当增加的能力使用率很低时（比如大多数的权重在最后都会趋于0），那么很大的计算资源就被浪费了。</li>
+</ul>
+<p>&emsp;&emsp;而如何处理这两个弊端呢？一个比较好的方法便是将全连接层甚至是卷积层以稀疏连接层代替，这个想法来自Arora等的工作，他们的主要成果表明了如果以一个大型的稀疏神经网络来表示数据集的概率分布，那么通过分析上一层激活后的相关统计信息并聚集输出高度相关的神经元，便可以一层一层地构建最优的网络拓扑结构。</p>
+<p>&emsp;&emsp;因为计算机对非均匀的稀疏数据的计算性能很差，早先的网络采用了随机的系数连接来打破网络的对称性提高学习的速率，因此在AlexNet中又重新地采用了全连接层来达到更好地并行计算能力。所以现在的主要问题便是是否存在这样的一个中间步骤，既能够充分地利用网络的稀疏结构，也能够使计算机对密集矩阵的高计算性能得到使用。大量的文表明了在稀疏矩阵的计算上可以通过将它们聚类为一个相对于密集的子矩阵从而使现有的技术的实际性能运用到矩阵运算中，Inception便是基于此提出了Inception module。</p>
+<h4 id="3-架构细节"><a href="#3-架构细节" class="headerlink" title="3 架构细节"></a>3 架构细节</h4><p>&emsp;&emsp;Inception架构的主要思想便是如何在卷积网络中找出一个近似的局部最优的稀疏结构，且该结构能被密集组件覆盖，得到这么一个结构后便能将其在空间中不断地重复最后构建整个网络。因此根据Arora等人提出的层次结构，将filter组成一个filter bank构成一层。目前Inception的架构的filter的尺寸被限制为1x1，3x3和5x5的，这个是基于便利性考虑的。同样因为池化层操作在目前大多数网络中都有着不错的效果，所以在该结构中同样增加一条并行的池化线，作者首先提出了如下的结构：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/7901825.jpg"><br>&emsp;&emsp;如上的Inception模块在前一层之后跟着三个不同大小的卷积核以及一个max pooling核。采用了不同大小的卷积核意味着能得到不同的感受野，而针对每种卷积核最后只需要分别设置不同的pad便能得到相同维度的特征并进行拼接。而随着网络的深度加深，所需要捕获更高层次的抽象信息，那么就要使3x3和5x5卷积核的比例在深网络中加大。</p>
+<p>&emsp;&emsp;但该组件的一个很大的问题便是，即使是5x5卷积核的数量不都，当filters数目很大时其参数的代价是过于昂贵的（比如上一层的输出是100x100x64，那这一层的输出是100x100x128，那么光一个5x5的卷积核所需要的参数便是64x5x5x128）。这个问题在加入了池化组件后会变得更加的明显，因为输出的filter的数量是等同于上一阶段filter的数量(即卷积核的数量)，而池化层和卷积层的合并势必会导致这一阶段到下一阶段输出的增加（因为在加入池化层后缩小了数据的长宽的维度，必定会增加其高度的维度，而卷积层的filter数目必须得和池化的filter数目保持一致）。所以尽管这种结构可能会覆盖最优的稀疏结构，但是随着阶段的增加其计算量过于庞大。</p>
+<p>&emsp;&emsp;为了解决上面描述的问题，论文中说到需要先进行信号和信息的压缩对数据进行降维处理，然后再传入3x3和5x5的卷积核，所以在这里使用了1x1的卷积核对数据先进行降维处理，具体结构如下所示：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/98447924.jpg"><br>&emsp;&emsp;从上图可以看到上一层的输出先经过1x1的卷积核进行处理再传入大的卷积核中，比如上一层的输出为100x100x64，如果先经过32个1x1的卷积核处理再传入128个5x5x32的卷积核中最后同样输出的也是100x100x128的数据，但是其参数的总量大约减少了四倍。该结构还有一个好处便是，它能是下一阶段的卷积层以不同的感受野去提取到上一阶段的特征并将它们整合在一起。</p>
+<h4 id="4-GooLeNet"><a href="#4-GooLeNet" class="headerlink" title="4 GooLeNet"></a>4 GooLeNet</h4><p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/29711383.jpg"><br>&emsp;&emsp;上表展示了在当时比赛中提交的最成功的一个例子，下面将详细分析下上表。在该网络中的所有卷积层、池化层后均采用的是ReLU作为激活函数，该网络的输入感受野是224x224x3,3为RGB的三条通道，输入数据也只经过平均化的处理（即使RGB数值以0为中心，位于-1到1之间）。</p>
+<p>&emsp;&emsp;“#3x3 reduce”和“#5x5 reduce”代表了降维所用的1x1的卷积核的个数。比如看表的第五行（inception（3a）），上一层的输出是28x28x192，Inception module中直接经过1x1的卷积核后输出的channels是64，经过3x3的卷积核时先用1x1卷积核把192维降到了96维然后经过3x3卷积核输出的channels是128,5x5的卷积核是先降维到32，然后输出的channels是32，pooling直接输出的channels是32，这样全部合并后是256维，所以通过这个inception module后输出的数据size是28x28x256。</p>
+<p>&emsp;&emsp;GoogLeNet架构中还有几个需要注意的点是：</p>
+<ul>
+<li>在最后的输出层之前采用Average Pooling代替全连接层,该做法使性能提升了0.6%；</li>
+<li>还是在Average Pooling后增加了一个全连接层只为了以后进行微调；</li>
+<li>尽管将全连接层移除，但dropout仍旧还是被使用，dropout值为0.7；</li>
+<li>因为层数比较深为了防止发生梯度消失，增加了两个辅助分类器来进行反向传播，可以从下图中看到该结构中总共有三个softmax，这两个辅助分类器分别位于Inception（4a）和Inception（4d）后面，在实际测试的时候这两个分类器将不使用。<br><strong>下面为完整的GoogLeNet架构图：</strong></li>
+</ul>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-20/31510768.jpg"><br>&emsp;&emsp;该模型在训练的过程采用了异步的随机梯度下降算法，并设置了0.9的momentum值，针对学习率设置采用的是每经过8个epochs学习速率减小4%。此外还用到了诸如Polyak平均、光度失真、随机插值等方法。</p>
+<p>&emsp;&emsp;在进行测试的过程中，论文采取了如下几种方法：</p>
+<ol>
+<li>独立地训练了7个版本的模型，这七个模型初始化的权重和学习率均相同，唯一的区别便是下采样采取的方法和它们从输入中获得的感受野的随机性不同;</li>
+<li>针对测试集，采取了一些和AlexNet中提到的方法类似的方法，首先将原始测试图片的宽或高分别resize成256,288,320,352四种，并对这些长方形图片分别从左、中、右裁剪出三个正方形（肖像图是上中下）。然后对这些裁剪的图分别取左上、左下、右上、右下、中心以及整张图片，将上述六种图片均resize成224x224，最后将上述处理完后的图片再做一次镜像翻转，然后作为测试集输入。经过这样的处理，一张图片便可以得到4x3x6x2=144张裁剪图，最后softmax输出的结果是平均这些图片得到的结果。</li>
+</ol>
+<h4 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h4><p>&emsp;&emsp;GoogLeNet网络的重点如下：</p>
+<ol>
+<li>Inception module的提出，使网络结构既保证稀疏性，又利用了密集矩阵的高计算性能;</li>
+<li>1x1卷积核的使用，在该网络中1x1卷积核的使用，降低了特征的维度，最后极大地减少了参数数量和运算量；</li>
+<li>后的分类器部分只采用了一个average pooling层和一个全连接层（其实全连接层也可以去掉），也在一定程度上降低了运算的数量。</li>
+</ol>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p><a href="https://arxiv.org/abs/1409.4842" target="_blank" rel="external">GoogLeNet</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/18/VGG模型学习/" rel="next" title="卷积神经网络模型学习（二）">
+                <i class="fa fa-chevron-left"></i> 卷积神经网络模型学习（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oyvr3xxmh.bkt.clouddn.com/17-11-4/36375047.jpg"
+                alt="Li" />
+            
+              <p class="site-author-name" itemprop="name">Li</p>
+              <p class="site-description motion-element" itemprop="description">无病呻吟...</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#GoogLeNet-Inception-Net"><span class="nav-number">1.</span> <span class="nav-text">GoogLeNet(Inception Net)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-相关工作"><span class="nav-number">1.1.</span> <span class="nav-text">1 相关工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-动机和高层次的思考"><span class="nav-number">1.2.</span> <span class="nav-text">2 动机和高层次的思考</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-架构细节"><span class="nav-number">1.3.</span> <span class="nav-text">3 架构细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-GooLeNet"><span class="nav-number">1.4.</span> <span class="nav-text">4 GooLeNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-总结"><span class="nav-number">1.5.</span> <span class="nav-text">5 总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用"><span class="nav-number">1.6.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

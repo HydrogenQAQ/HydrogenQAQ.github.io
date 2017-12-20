@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="deep learning,CNN," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="VGG&amp;emsp;&amp;emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。 1 ConvNet配置1.1 架构&amp;emsp;&amp;emsp;VGG-16网络唯一所做的预处理便是将输入">
+<meta name="keywords" content="deep learning,CNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络模型学习（二）">
+<meta property="og:url" content="http://yoursite.com/2017/12/18/VGG模型学习/index.html">
+<meta property="og:site_name" content="少年游">
+<meta property="og:description" content="VGG&amp;emsp;&amp;emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。 1 ConvNet配置1.1 架构&amp;emsp;&amp;emsp;VGG-16网络唯一所做的预处理便是将输入">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/16448630.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-17/67520009.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-17/39393803.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/40366083.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/32921728.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/30597725.jpg">
+<meta property="og:updated_time" content="2017-12-18T08:01:41.609Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络模型学习（二）">
+<meta name="twitter:description" content="VGG&amp;emsp;&amp;emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。 1 ConvNet配置1.1 架构&amp;emsp;&amp;emsp;VGG-16网络唯一所做的预处理便是将输入">
+<meta name="twitter:image" content="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/16448630.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/18/VGG模型学习/"/>
+
+
+
+
+
+  <title>卷积神经网络模型学习（二） | 少年游</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">少年游</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-主页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-文章"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/18/VGG模型学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oyvr3xxmh.bkt.clouddn.com/17-11-4/36375047.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="少年游">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">卷积神经网络模型学习（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T15:30:19+08:00">
+                2017-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index">
+                    <span itemprop="name">note</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h3><p>&emsp;&emsp;VGG网络由牛津大学提出，并发表于2015年的ICLR会议上，该论文针对每一个卷积层采用了一个3x3的卷积核对图像做卷积，并基于当时技术的配置将卷积神经网络的层数推向了16-19层。VGG网络在2014年的ImageNet比赛中获得了物体检测的冠军以及图像分类的亚军。</p>
+<h4 id="1-ConvNet配置"><a href="#1-ConvNet配置" class="headerlink" title="1 ConvNet配置"></a>1 ConvNet配置</h4><h5 id="1-1-架构"><a href="#1-1-架构" class="headerlink" title="1.1 架构"></a>1.1 架构</h5><p>&emsp;&emsp;VGG-16网络唯一所做的预处理便是将输入的224x224图片的每个像素减去RGB的均值（这个操作是使得输入的各个维度的数据都能中心化到0，还可以针对每个数据除以rgb最大值255使所有输入数据均处于-1-1之间）。在该网络中使用了3x3的卷积核（感受野为3x3），这是一个和之前LeNet5以及AlexNext相比非常小的卷积核，同时在该网络中还用到过1x1的卷积核（这个可以看做是对输入通道的线性变化）。卷积核的stride设置为1，padding的设置为same，池化操作为2x2的窗口，步长为2。最后的全连接层分别为4096、4096、1000通道，这和之前的网络相比没什么区别，此外采用的激活函数也仍旧是ReLU。VGG-16网络还有一个操作是它不再使用AlexNet中提到过的LRN，因为它觉得这个方法对准确率的提升不明显反而增加了内存的消耗和计算的时间，下面是简化版的VGG-16架构：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/16448630.jpg"></p>
+<h5 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h5><p>&emsp;&emsp;在该论文中，该卷积网络的配置如下表所示：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-17/67520009.jpg"><br>&emsp;&emsp;从上表中可以看到总共有六个网络（A-E），它们之间除了层数的不同以外，其它的诸如stride等参数全部一致。每一层的channels也是相对较小的，从第一层的64每次增加一倍到最后达到512，下表展示了这些网络的参数个数总数，可以看出尽管层数增加了很多，但总的参数的数量并没有增加很多。</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-17/39393803.jpg"><br>&emsp;&emsp;可以容易地看到2个3x3的卷积核的感受野大小和一个5x5的卷积核感受野大小相似，3个3x3的卷积核的感受野同一个7x7的卷积核的感受野相似。那么相比于一个7x7的卷积核，3个3x3的卷积核堆叠有什么好处？其一：3个3x3的卷积核对应三层卷积层，能比一层卷积层多出两个非线性层处理，使得最终的模型更加复杂，辨别力更强；其二：参数数量缩减，以前一个7x7的卷积核（假设有C的通道数），那么参数的数量是49C^2，而现在的参数是3（3^2 C^2 ）=27C^2。在表1中的1x1卷积核的本质上是将输入进行线性投影后加入一个非线性层。</p>
+<h4 id="2-训练和测试"><a href="#2-训练和测试" class="headerlink" title="2 训练和测试"></a>2 训练和测试</h4><p>&emsp;&emsp;训练的过程基本和AlexNet的训练过程类似，使用了随机梯度下降（基于反向传播）并将momentum值设置为0.9，mini batch的值为256，dropout参数设置为0.5，权值衰减的措施也如AlexNet一样，初始值为0.01每当validation数据集的准确率基本不变的时候减小十倍。最终该模型迭代了370000次（74epochs），尽管参数的数量和网络的层数都要大于AlexNet但最终只需要更少的epochs，推测原因应该是：1.更大的层数和更小的卷积核导致的隐式正则化；2.对每层的参数初始化采取了正确的方法。<br>&emsp;&emsp;VGG网络的权重参数初始化是首先使用表1中的A网络，用随机的参数训练该网络至收敛，然后将训练完成的参数去初始化剩下B-E网络的前四层卷积层和最后的三层全连接层，其余层仍旧使用随机参数。<br>&emsp;&emsp;在该篇论文中用了很多篇幅去强调了网络输入图片的尺寸问题，对于训练的图片采取把图片全部转换成边长为S的正方形（如S=256便是AlexNet所采用的尺寸，还有S=384等），然后对转化好的图片随机裁剪224x224的部分去训练。该模型采取了两种方法去设置S，</p>
+<ol>
+<li>单尺度训练：先把所有图片设置为256x256然后裁剪后进行训练得到训练好的模型，接着再把所有图片设置为384x284，用S=256时得到的参数去初始化S=384时候的参数，并把学习速率调低十倍；</li>
+<li>多尺度训练：所有图片的尺寸并不是唯一的，即它们是随机于〖[S〗_min,S_max]（S_min=256，S_max=512），这样的话就会使每张图片的尺寸不尽相同，然后仍然是对图片进行裁剪将裁剪后224x224的图片作为训练集进行训练，（原文说因为图片中物体的大小有不同的size，所以这样做能把这点考虑进去，而且是通过尺寸的抖动增大了数据集），同样这里采取了S=384训练好后的模型参数来进行初始化，并设置学习速率为0.001。</li>
+</ol>
+<p><strong>网络的测试过程中，针对测试图片的scale处理也采取了两种方法：</strong></p>
+<ol>
+<li>dense evaluation：即全连接卷积网络，针对的是整张训练图片。在这里同样采取了图片的水平翻转增加了测试集，最后的结果由原始图片和翻转图片的结果取平均</li>
+<li>multi-crop evaluation：即针对测试图片进行多重的裁剪，这样会使计算量变得非常大，因为模型要针对每一个crop进行计算。论文中还提到了这两种方法之间可以进行互补，原因呢？两种方法有着不同的卷积边界条件（这里读论文的时候读的迷迷糊糊的）。</li>
+</ol>
+<h4 id="3-分类实验"><a href="#3-分类实验" class="headerlink" title="3 分类实验"></a>3 分类实验</h4><p>&emsp;&emsp;ImageNet的classification最终结果由两个指标来进行评估，分别是top-1和top-5 error，前者是多类分类误差即不正确的分类图像占据的比例；后者是ILSVRC采用的主要评估标准，它是在前五个中都不是该图片类别的占比（即预测出来的前五个类别都不是该图片的类别所占总数的比例）。</p>
+<h5 id="3-1-单尺度评估vs多尺度评估"><a href="#3-1-单尺度评估vs多尺度评估" class="headerlink" title="3.1 单尺度评估vs多尺度评估"></a>3.1 单尺度评估vs多尺度评估</h5><p>&emsp;&emsp;单尺度评估即设置测试数据集的图片大小唯一，即如果训练图片S固定，那么Q=S，如果训练图片S∈[S_min,S_max ]，那么Q=0.5(S_min+S_max)，最后的结果如下表所示：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/40366083.jpg"><br>&emsp;&emsp;从上表中能得到的结论：</p>
+<ul>
+<li>AlexNet中提到的LRN层没有任何作用；</li>
+<li>随着层数的增加，错误率也在不断地减小；</li>
+<li>1x1卷积核引入后起到了一些作用（CA网络比B网络表现好），但拿C网络和D网络相比，3x3卷积核还是性能要比1x1的要好；</li>
+<li>当层数达到19层后，网络的识别率已经达到了饱和；</li>
+<li>一个具有小卷积核的深网络要完全胜过一个大卷积核的浅网络；</li>
+<li>S以区间随机形式设置的方式结果要明显地好于用一个固定值设置。</li>
+</ul>
+<p>&emsp;&emsp;下面再来看多尺度评估的结果，多尺度评估是测试集图片的大小也不再是唯一了，而是取三个值最后将三个值的结果取平均进行预测。取法如下：如果S的大小固定，那么Q={S-32，S,S+32}，如果S的大小为一个区间内，那么Q={S_min，0.5(S_min+S_max),S_max }，下表为结果：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/32921728.jpg"><br>&emsp;&emsp;该表的结果说明了多尺度的抖动效果要较优于单尺度。</p>
+<h5 id="3-2-多网络融合"><a href="#3-2-多网络融合" class="headerlink" title="3.2 多网络融合"></a>3.2 多网络融合</h5><p>在进行实际的操作中，最终的分类结果是融合了好几个模型的结果进行平均化，结果如下：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/17-12-18/30597725.jpg"></p>
+<h4 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h4><p>VGG网络的重点如下：</p>
+<ul>
+<li>堆叠使用小卷积核（3x3卷积核）来代替大卷积核使网络变得更深更复杂；</li>
+<li>网络越深对精度的提高越大；</li>
+<li>但该网络的参数数量过于庞大搜索空间非常大。</li>
+</ul>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p><a href="http://arxiv.org/abs/1409.1556" target="_blank" rel="external">VGG</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/16/AlexNet模型学习/" rel="next" title="卷积神经网络模型学习（一）">
+                <i class="fa fa-chevron-left"></i> 卷积神经网络模型学习（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/20/GoogLeNet模型学习/" rel="prev" title="GoogLeNet模型学习">
+                GoogLeNet模型学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oyvr3xxmh.bkt.clouddn.com/17-11-4/36375047.jpg"
+                alt="Li" />
+            
+              <p class="site-author-name" itemprop="name">Li</p>
+              <p class="site-description motion-element" itemprop="description">无病呻吟...</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#VGG"><span class="nav-number">1.</span> <span class="nav-text">VGG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ConvNet配置"><span class="nav-number">1.1.</span> <span class="nav-text">1 ConvNet配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-架构"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 架构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-配置"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 配置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-训练和测试"><span class="nav-number">1.2.</span> <span class="nav-text">2 训练和测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-分类实验"><span class="nav-number">1.3.</span> <span class="nav-text">3 分类实验</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-单尺度评估vs多尺度评估"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 单尺度评估vs多尺度评估</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-多网络融合"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 多网络融合</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-总结"><span class="nav-number">1.4.</span> <span class="nav-text">4 总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用"><span class="nav-number">1.5.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
