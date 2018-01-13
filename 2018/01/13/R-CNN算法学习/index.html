@@ -123,25 +123,25 @@
 
 
 
-<meta name="description" content="R-CNN&amp;emsp;&amp;emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故">
+<meta name="description" content="R-CNN&amp;emsp;&amp;emsp;R-CNN提出之前的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标（评价一个目标检测算法的指标）提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像">
 <meta name="keywords" content="deep learning,Object Detection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="R-CNN算法学习">
 <meta property="og:url" content="http://yoursite.com/2018/01/13/R-CNN算法学习/index.html">
 <meta property="og:site_name" content="少年游">
-<meta property="og:description" content="R-CNN&amp;emsp;&amp;emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故">
+<meta property="og:description" content="R-CNN&amp;emsp;&amp;emsp;R-CNN提出之前的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标（评价一个目标检测算法的指标）提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70337038.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/77327248.jpg">
 <meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/30454736.jpg">
 <meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70676408.jpg">
 <meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/2438236.jpg">
 <meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/69399516.jpg">
 <meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/69991674.jpg">
-<meta property="og:updated_time" content="2018-01-13T13:26:02.411Z">
+<meta property="og:updated_time" content="2018-01-13T13:38:03.978Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R-CNN算法学习">
-<meta name="twitter:description" content="R-CNN&amp;emsp;&amp;emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故">
-<meta name="twitter:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70337038.jpg">
+<meta name="twitter:description" content="R-CNN&amp;emsp;&amp;emsp;R-CNN提出之前的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标（评价一个目标检测算法的指标）提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像">
+<meta name="twitter:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/77327248.jpg">
 
 
 
@@ -393,14 +393,14 @@
       
 
       
-        <h3 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h3><p>&emsp;&emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故先针对辅助任务进行了一个有监督的预训练，再基于此对特征任务进行微调，这在实验中取得了很好的效果。</p>
+        <h3 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h3><p>&emsp;&emsp;R-CNN提出之前的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标（评价一个目标检测算法的指标）提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故先针对辅助任务进行了一个有监督的预训练，再基于此对特征任务进行微调，这在实验中取得了很好的效果。</p>
 <h4 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h4><p>&emsp;&emsp;论文在开头第一句便提出：特征很重要。在2010-2012年，针对PASCAL VOC权威数据集的物体检测发展是十分缓慢的，所做的工作也仅仅是整合几个不同的系统进行检测，或者是对之前成功的方法做一些不重要的改变。过去所使用的方法均是基于SIFT和HOG（这两种方法都是基于图像中梯度方向直方图的特征提取法）。在文章中说到这种表示和V1层（灵长类动物视觉通道的第一块皮质区域）的表示方法类似。但是我们也能知道计算特征是一个分层的多阶段过程，这样才能得到更富有信息的特征。</p>
 <p>&emsp;&emsp;模式识别最早的尝试是Fukushima的neocognitron，这是一个受生物启发的多层次，平移不变性的模型，但当时缺少有监督的训练算法。之后LeCun等人证明了可以通过基于反向传播的随机梯度下降算法训练卷积神经网络，并取得了不错的效果（这个便是LeCun当时提出的LeNet5），而该模型被认为是继承了neocognitron的模型。</p>
 <p>&emsp;&emsp;CNN模型在1990年代被广泛使用，但是之后由于SVM的出现和成功逐渐淡出人们的视野。而在2012年AlexNet在ImageNet图片分类比赛中的大成功，卷积网络又重新大热，而该模型的成功和120万带标记的图片密不可分，同时该模型和LeNet5的架构非常相似（不同之处在于运用了ReLU非线性激活和Dropout对抗过拟合等，这些可以在之前的文章中看到）。而ImageNet比赛的成功也使Object Detection领域有了新的讨论：即该如何使图像分类比赛的结果泛化到PASCAL VOC比赛中。</p>
 <p>&emsp;&emsp;该论文回答了上述问题，并展示了一个卷积神经网络是如何使目标检测得到更好的性能，作为对比的是传统的基于简单的HOG特征形成的检测系统。为了达到这个效果，论文主要针对的是两个问题：第一个是用深度网络进行目标定位，第二个则是训练一个只用少量的带标签数据的大型模型（因为在目标检测领域的带标签的数据集较少）。</p>
 <p>&emsp;&emsp;不同于图像分类，目标检测需要在一张图片中定位一个或多个目标。一种方法是将定位问题视作回归问题，但效果并不好。另一种替代的方法是建立一个滑动窗口检测器，而CNNs在过去的20年均是用的这个方法，主要实在特定的目标类别上（比如脸和行人）。为了保持高的分辨率，这些CNNs通常只使用很小的卷积网络（两层卷积层池化层），因为如果层数过高分辨率又高参数的数量将是极大的。在该论文的工作中也使用了而该方法，但是网络的层数是五层，这就导致该网络在输入的图片上有非常大的感受野（195x195pixels）和步长（32x32pexels），这样做让滑动窗口精确定位成为了一个技术开发上的挑战。</p>
-<p>&emsp;&emsp;R-CNN采用了“recognition using regions”方法来解决CNN的定位问题，该方法在目标检测和语义分割问题都取得了成功。测试阶段，该方法针对输入图生成了大约2000个独立类别的候选区域（region proposals），再通过一个CNN从每个区域提取出一个固定长度的特征向量，最后通过一个特定类别的线性SVMs来对每一个候选区域进行分类。为了保证CNN输入的尺寸固定，采用了一个简单的技术（affine image warping），不用管候选区域的尺寸，下图展示了该方法的一个大概模型和实验结果。</p>
-<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70337038.jpg"><br>&emsp;&emsp;在检测方面另一个重要的挑战是带标签的训练集过于稀少，因而不足以训练一个大型的卷积神经网络模型。一种通用的解决方案是使用无监督的预训练，然后采用有监督性的微调（有点类似迁移学习）。即将ILSVRC作为辅助数据集，训练得到模型参数，然后将该模型迁移到PASCAL数据集上并进行一些微调，这是一种在数据较少情况下有效学习高维CNN特征的方法。</p>
+<p>&emsp;&emsp;R-CNN采用了“recognition using regions”方法来解决CNN的定位问题，该方法在目标检测和语义分割问题都取得了成功。测试阶段，该方法针对输入图生成了大约2000个独立类别的候选区域（region proposals），再通过一个CNN从每个区域提取出一个固定长度的特征向量，最后通过一个特定类别的线性SVMs来对每一个候选区域进行分类。为了保证CNN输入的尺寸固定，采用了一个简单的技术（affine image warping），不用管候选区域的尺寸。下图展示了R-CNN算法的一个大致步骤和结果。</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/77327248.jpg" alt=""><br>&emsp;&emsp;在检测方面另一个重要的挑战是带标签的训练集过于稀少，因而不足以训练一个大型的卷积神经网络模型。一种通用的解决方案是使用无监督的预训练，然后采用有监督性的微调（有点类似迁移学习）。即将ILSVRC作为辅助数据集，训练得到模型参数，然后将该模型迁移到PASCAL数据集上并进行一些微调，这是一种在数据较少情况下有效学习高维CNN特征的方法。</p>
 <p>&emsp;&emsp;该系统同样非常的高效，唯一特定类型的计算表示相对小型的矩阵向量的点乘和贪婪非极大值抑制。在这里介绍一下非极大值抑制，因为在上述说明中滑动窗口会产生很多的候选区域，比如一个人的脸可能会有很多框（每个框带有一个分类器的得分），而非极大值抑制要做的便是针对这张脸，只保留一个最优的框，抑制的过程是一个迭代-遍历-消除的过程。</p>
 <p>&emsp;&emsp;具体算法细节可以分成三步：1.将所有框的得分排序，选中最高分框。2.遍历其余所有框，如果和当前最高分框的重叠面积（IOU）大于一定的阈值就删除（这样做的目的便是去除对某一张脸的最高分框以外的框）。3.从未处理的框中继续选择得分最高的框重复操作。</p>
 <h4 id="2-使用R-CNN进行目标检测"><a href="#2-使用R-CNN进行目标检测" class="headerlink" title="2 使用R-CNN进行目标检测"></a>2 使用R-CNN进行目标检测</h4><p>&emsp;&emsp;R-CNN目标检测系统总共包含三个模块：1.生成类别独立的候选区域；2.一个大型的卷积神经网络模型，针对候选区域提取出固定尺寸的特征向量；3.一系列特定类别的线性SVMs。</p>
