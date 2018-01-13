@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="deep learning,Object Detection," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="R-CNN&amp;emsp;&amp;emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故">
+<meta name="keywords" content="deep learning,Object Detection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R-CNN算法学习">
+<meta property="og:url" content="http://yoursite.com/2018/01/13/R-CNN算法学习/index.html">
+<meta property="og:site_name" content="少年游">
+<meta property="og:description" content="R-CNN&amp;emsp;&amp;emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70337038.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/30454736.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70676408.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/2438236.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/69399516.jpg">
+<meta property="og:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/69991674.jpg">
+<meta property="og:updated_time" content="2018-01-13T13:26:02.411Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R-CNN算法学习">
+<meta name="twitter:description" content="R-CNN&amp;emsp;&amp;emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故">
+<meta name="twitter:image" content="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70337038.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/13/R-CNN算法学习/"/>
+
+
+
+
+
+  <title>R-CNN算法学习 | 少年游</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">少年游</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-主页"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-标签"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-分类"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-文章"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/R-CNN算法学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oyvr3xxmh.bkt.clouddn.com/17-11-4/36375047.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="少年游">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">R-CNN算法学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-13T21:06:37+08:00">
+                2018-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index">
+                    <span itemprop="name">note</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h3><p>&emsp;&emsp;过去的几年里，在权威数据集PASCAL VOC上，目标检测的表现已经趋于稳定。表现最好的方法，是融合了多种图像低维特征和高维上下文环境的复杂系统。而在R-CNN这篇论文中，提出了一个简单易扩展的目标检测算法，其效果将mAP指标提升30%。这个方法主要秉持了两个观点：1.为了实现目标检测和语义分割，将大型卷积神经网络用于图像的候选区域；2.因为带标签的训练集较少，故先针对辅助任务进行了一个有监督的预训练，再基于此对特征任务进行微调，这在实验中取得了很好的效果。</p>
+<h4 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h4><p>&emsp;&emsp;论文在开头第一句便提出：特征很重要。在2010-2012年，针对PASCAL VOC权威数据集的物体检测发展是十分缓慢的，所做的工作也仅仅是整合几个不同的系统进行检测，或者是对之前成功的方法做一些不重要的改变。过去所使用的方法均是基于SIFT和HOG（这两种方法都是基于图像中梯度方向直方图的特征提取法）。在文章中说到这种表示和V1层（灵长类动物视觉通道的第一块皮质区域）的表示方法类似。但是我们也能知道计算特征是一个分层的多阶段过程，这样才能得到更富有信息的特征。</p>
+<p>&emsp;&emsp;模式识别最早的尝试是Fukushima的neocognitron，这是一个受生物启发的多层次，平移不变性的模型，但当时缺少有监督的训练算法。之后LeCun等人证明了可以通过基于反向传播的随机梯度下降算法训练卷积神经网络，并取得了不错的效果（这个便是LeCun当时提出的LeNet5），而该模型被认为是继承了neocognitron的模型。</p>
+<p>&emsp;&emsp;CNN模型在1990年代被广泛使用，但是之后由于SVM的出现和成功逐渐淡出人们的视野。而在2012年AlexNet在ImageNet图片分类比赛中的大成功，卷积网络又重新大热，而该模型的成功和120万带标记的图片密不可分，同时该模型和LeNet5的架构非常相似（不同之处在于运用了ReLU非线性激活和Dropout对抗过拟合等，这些可以在之前的文章中看到）。而ImageNet比赛的成功也使Object Detection领域有了新的讨论：即该如何使图像分类比赛的结果泛化到PASCAL VOC比赛中。</p>
+<p>&emsp;&emsp;该论文回答了上述问题，并展示了一个卷积神经网络是如何使目标检测得到更好的性能，作为对比的是传统的基于简单的HOG特征形成的检测系统。为了达到这个效果，论文主要针对的是两个问题：第一个是用深度网络进行目标定位，第二个则是训练一个只用少量的带标签数据的大型模型（因为在目标检测领域的带标签的数据集较少）。</p>
+<p>&emsp;&emsp;不同于图像分类，目标检测需要在一张图片中定位一个或多个目标。一种方法是将定位问题视作回归问题，但效果并不好。另一种替代的方法是建立一个滑动窗口检测器，而CNNs在过去的20年均是用的这个方法，主要实在特定的目标类别上（比如脸和行人）。为了保持高的分辨率，这些CNNs通常只使用很小的卷积网络（两层卷积层池化层），因为如果层数过高分辨率又高参数的数量将是极大的。在该论文的工作中也使用了而该方法，但是网络的层数是五层，这就导致该网络在输入的图片上有非常大的感受野（195x195pixels）和步长（32x32pexels），这样做让滑动窗口精确定位成为了一个技术开发上的挑战。</p>
+<p>&emsp;&emsp;R-CNN采用了“recognition using regions”方法来解决CNN的定位问题，该方法在目标检测和语义分割问题都取得了成功。测试阶段，该方法针对输入图生成了大约2000个独立类别的候选区域（region proposals），再通过一个CNN从每个区域提取出一个固定长度的特征向量，最后通过一个特定类别的线性SVMs来对每一个候选区域进行分类。为了保证CNN输入的尺寸固定，采用了一个简单的技术（affine image warping），不用管候选区域的尺寸，下图展示了该方法的一个大概模型和实验结果。</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70337038.jpg"><br>&emsp;&emsp;在检测方面另一个重要的挑战是带标签的训练集过于稀少，因而不足以训练一个大型的卷积神经网络模型。一种通用的解决方案是使用无监督的预训练，然后采用有监督性的微调（有点类似迁移学习）。即将ILSVRC作为辅助数据集，训练得到模型参数，然后将该模型迁移到PASCAL数据集上并进行一些微调，这是一种在数据较少情况下有效学习高维CNN特征的方法。</p>
+<p>&emsp;&emsp;该系统同样非常的高效，唯一特定类型的计算表示相对小型的矩阵向量的点乘和贪婪非极大值抑制。在这里介绍一下非极大值抑制，因为在上述说明中滑动窗口会产生很多的候选区域，比如一个人的脸可能会有很多框（每个框带有一个分类器的得分），而非极大值抑制要做的便是针对这张脸，只保留一个最优的框，抑制的过程是一个迭代-遍历-消除的过程。</p>
+<p>&emsp;&emsp;具体算法细节可以分成三步：1.将所有框的得分排序，选中最高分框。2.遍历其余所有框，如果和当前最高分框的重叠面积（IOU）大于一定的阈值就删除（这样做的目的便是去除对某一张脸的最高分框以外的框）。3.从未处理的框中继续选择得分最高的框重复操作。</p>
+<h4 id="2-使用R-CNN进行目标检测"><a href="#2-使用R-CNN进行目标检测" class="headerlink" title="2 使用R-CNN进行目标检测"></a>2 使用R-CNN进行目标检测</h4><p>&emsp;&emsp;R-CNN目标检测系统总共包含三个模块：1.生成类别独立的候选区域；2.一个大型的卷积神经网络模型，针对候选区域提取出固定尺寸的特征向量；3.一系列特定类别的线性SVMs。</p>
+<p>&emsp;&emsp;在当时提出了很多关于如何选取候选区域的方法，该系统最终选择了selective search方法。特征提取方面该系统最终针对每个候选区域提取出一个4096维的特征向量，所运用的神经网络模型便是AlexNet。在对输入图片尺寸设置上，因为喂给卷积神经网络的图片都需要227x227，而选择出来的候选区域的大小不一。在这里选择了一种最简单的实现方法，即不论候选区域图片大小或横纵比是多少都直接将其不再保持原本横纵比缩放到指定尺寸。</p>
+<h4 id="2-1-测试"><a href="#2-1-测试" class="headerlink" title="2.1 测试"></a>2.1 测试</h4><p>&emsp;&emsp;在测试的过程中，首先运用selective search在测试图片上提取出约2000个候选区域，并将每个都前向传播进CNN中，之后便是分类然后进行贪婪的非极大值抑制来选取出最优的detection。</p>
+<p>&emsp;&emsp;关于性能的分析，两个性质使检测效率非常高：1.因为卷积神经网络参数在所有类别都共享（相对全连接网络减少了很多的参数量）；2.特征向量维度不高（相比于其它的系统）。最终针对一张图片计算出每个候选区域特征向量的时间是（在GPU上每张图片13s，CPU上53s），因为共享是消耗均摊到每一个类别上了，而分类的计算主要是特征向量和SVM权重之间矩阵的点乘和非极大值抑制方法的计算。特征向量矩阵是一个2000x4096，SVM的权重矩阵为4096xN（N为类别的数量）。</p>
+<p>&emsp;&emsp;根据上述的分析可以看到，R-CNN系统完全可以扩展到数千个种类物体的检测，并且不需要使用类似散列表这样的技术。甚至当有10W类别时，最后结果矩阵的点乘在当时一个先进的多核CPU下也只需要10s，这种高效率不仅仅是使用候选区域和共享特征。</p>
+<h5 id="2-2-训练"><a href="#2-2-训练" class="headerlink" title="2.2 训练"></a>2.2 训练</h5><p>&emsp;&emsp;在训练的过程中，针对所有候选区域，选取了IoU&gt;=0.5（就是和对比框重叠占的比例）的作为与当前样本同一种分类，会进行剔除。卷积神经网络采用的随机梯度下降并设置学习速率为0.001.针对IoU的设置可以采用验证集来看哪一个更好。<br>最终的结果如下表所示，该结果是在PASCAL VOC 2010数据集上得到的。</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/30454736.jpg"><br>&emsp;&emsp;从表中可以看到，论文将R-CNN模型和当时四个较强的系统进行了对比。在这里提到了使用直方图交叉核的SVM对比于UVA系统中的多特征非线性核的SVM在mAP上从35.1%提高到了53.7%并且运行地更加快速。</p>
+<h4 id="3-可视化，ablation和错误模式"><a href="#3-可视化，ablation和错误模式" class="headerlink" title="3 可视化，ablation和错误模式"></a>3 可视化，ablation和错误模式</h4><h5 id="3-1-可视化学习到的特征"><a href="#3-1-可视化学习到的特征" class="headerlink" title="3.1 可视化学习到的特征"></a>3.1 可视化学习到的特征</h5><p>&emsp;&emsp;通常第一层卷积核得到的特征都能被直接观测并易于理解，它们大多抓取到的都是边缘和对比度。而后面层数捕获的特征的理解更具挑战性，在这里论文提出了一种简单的无参数的方法来直接展示深层网络究竟学到了什么。</p>
+<p>&emsp;&emsp;该方法的主要思想是首先从网络中甄选出一个特定的单元（特征），并将其用作自己的目标检测器。这句话的意思就是说，我们再大量的候选区域（约为1千万）中计算上述选到的单元的激活值，即将候选区域输入进该单元得到的结果。然后将得到的结果排序并运用非极大值抑制方法进行剔除最终留下那些最高得分的候选区域。这样做便是让被选择的单元自己说话，因为通过观察排序出来最高的那些候选区域可以看到这个单元主要是在捕获那些东西。</p>
+<p>&emsp;&emsp;论文针对了卷积神经网络第五层的最大池化层进行了可视化操作，该池化层的feature map是6x6x256，忽略边界效应每一个池化单元（pooling filter）在输入图片上的感受野是195x195（中心的能感受到几乎全部，边缘的则是经过裁剪的较小的感受野）。下面展示了该池化层可视化后的结果，每一行代表了一个池化单元经过非极大值抑制处理后最高的16个得分。</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/70676408.jpg"><br>&emsp;&emsp;从上图中能够看到，第一行更多的是在学习人脸，第二行在学习狗和点阵列，第三行在学习红色斑点，还有诸如学习文本三角结构等之类的特征。在该层之后的全连接层则具有将这些丰富特征的大量组合进行建模的能力。</p>
+<h5 id="3-2-Ablation-studies"><a href="#3-2-Ablation-studies" class="headerlink" title="3.2 Ablation studies"></a>3.2 Ablation studies</h5><p>&emsp;&emsp;关于Ablation study是什么，在这里引用一下一种解释：An ablation study typically refers to removing some “feature” of the model or algorithm, and seeing how that affects performance，即它想要做的便是看看哪些特征在模型或者算法上表现是最好的。</p>
+<p>&emsp;&emsp;在这里首先拿没有进过微调的AlexNet模型，将其直接运用到PASCAL数据集上得到结果，然后将其与经过微调的模型得到的结果对比，具体结果如下所示：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/2438236.jpg"><br>&emsp;&emsp;上表第一道第三行所示便是没有经过微调模型得到的结果，可以看到第七层全连接层得到的结果比第六层的结果还要差，这表明了该模型29%的参数可以删去（从以前的文章中我们能够知道早期的卷积神经网络模型大部分的参数都在最后几层全连接层中，所以才会有后来的avg pooling layer代替fully connected layer）。更加震惊的是把第六第七层全删掉得到的结果也很好，所以说CNN大部分的表示能力来自于卷积层而非全连接层，故对于滑动窗口检测器来说完全可以只需要该模型的前五层。</p>
+<p>&emsp;&emsp;从第四到第六行可以看到在经过微调参数后，性能提升地非常明显，而且对于第六层和第七层的提升更大，这表明了从第五层pool中学到的都是一些通用的，大部分的提升来自于学习领域特定的非线性分类器结果。</p>
+<h5 id="3-2-检测错误分析"><a href="#3-2-检测错误分析" class="headerlink" title="3.2 检测错误分析"></a>3.2 检测错误分析</h5><p>&emsp;&emsp;在这里使用了Hoiem等人的检测分析工具对结果检测得到了如下所示的图：</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/69399516.jpg"><br>&emsp;&emsp;上面每一张图代表了一个不断演变的FP类型的分布（注意这里FP是分类错误即本来是负样例被分类成正样例，具体见下图）。FP分为四种类型：Loc（定位的准确率低，检测框和真实值的覆盖率在0.1到0.5或者存在重复值），Sim（与相似类别混淆），Oth（与不相似的类别混淆），BG（检测框标记在了背景上）。从上图中能看到该系统主要的错误结果是因为定位的准确率低，第三列显示了使用简单的边界回归方法修复了许多定位的错误。</p>
+<p><img src="http://oyvr3xxmh.bkt.clouddn.com/18-1-13/69991674.jpg"><br>&emsp;&emsp;基于错误分析，R-CNN试验了一种简单的方法来降低定位错误，该方法受DPM模型中的检测框回归方法的启发，使用在候选区域提取出的pool5(第五层卷积层)的特征训练了一个线性回归模型，来修正出一个更加精确的检测框。</p>
+<h4 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h4><p>R-CNN可以算作第一个把卷积神经网络引入object detection领域并取得较好成功的模型。<strong>该模型有几个亮点：</strong></p>
+<ul>
+<li>第一个是速度降低了很多，因为它选择了约2000个候选区域之后的特征向量提取和类别判断都是基于这些候选区域；</li>
+<li>第二个是解决了训练集稀少情况下如何通过使用辅助数据集（该论文使用了ILSVC数据集）加上参数微调来较好地完成任务。</li>
+</ul>
+<p><strong>最后再次总结下R-CNN算法的总体步骤：</strong></p>
+<ol>
+<li>通过Selective Search算法对一张输入图像筛选出2000个左右的候选区域；</li>
+<li>对每个候选区域使用AlexNet网络提取出特征向量；</li>
+<li>将每个特征向量送入所有SVM的线性分类器判断属于哪一类；</li>
+<li>对分好类的目标的Bounding box进行线性回归，输出精细修正过后的Tighter Bounding box。</li>
+</ol>
+<h4 id="5-引用"><a href="#5-引用" class="headerlink" title="5 引用"></a>5 引用</h4><p><a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="external">R-CNN</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+            <a href="/tags/Object-Detection/" rel="tag"># Object Detection</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/28/ResNet模型学习/" rel="next" title="ResNet模型学习">
+                <i class="fa fa-chevron-left"></i> ResNet模型学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oyvr3xxmh.bkt.clouddn.com/17-11-4/36375047.jpg"
+                alt="Li" />
+            
+              <p class="site-author-name" itemprop="name">Li</p>
+              <p class="site-description motion-element" itemprop="description">无病呻吟...</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#R-CNN"><span class="nav-number">1.</span> <span class="nav-text">R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-介绍"><span class="nav-number">1.1.</span> <span class="nav-text">1 介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-使用R-CNN进行目标检测"><span class="nav-number">1.2.</span> <span class="nav-text">2 使用R-CNN进行目标检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-测试"><span class="nav-number">1.3.</span> <span class="nav-text">2.1 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-训练"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.2 训练</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-可视化，ablation和错误模式"><span class="nav-number">1.4.</span> <span class="nav-text">3 可视化，ablation和错误模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-可视化学习到的特征"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 可视化学习到的特征</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-Ablation-studies"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 Ablation studies</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-检测错误分析"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.2 检测错误分析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-总结"><span class="nav-number">1.5.</span> <span class="nav-text">4 总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-引用"><span class="nav-number">1.6.</span> <span class="nav-text">5 引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
